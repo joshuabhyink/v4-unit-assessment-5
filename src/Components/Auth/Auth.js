@@ -28,7 +28,7 @@ class Auth extends Component {
       .then(res => {
         //code here
         this.props.history.push('/dash')
-        // updateUser({username, profile_pic})
+        updateUser({})
       })
       .catch(err => {
         console.log(err)
@@ -41,7 +41,7 @@ class Auth extends Component {
       .then(res => {
         //code here
         this.props.history.push('/dash')
-        // updateUser({username, profile_pic})
+        updateUser({})
       })
       .catch(err => {
         console.log(err)
@@ -82,4 +82,4 @@ class Auth extends Component {
   }
 }
 
-export default connect(null, {updateUser}(Auth));
+export default connect(null, {updateUser})(Auth);

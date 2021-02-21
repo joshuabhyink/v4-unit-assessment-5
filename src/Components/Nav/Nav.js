@@ -27,7 +27,10 @@ class Nav extends Component {
   
   logout() {
     axios.post('/api/auth/logout')
-      .then(_ => this.props.logOut())
+      .then(_ => {
+        this.props.history.push('/')
+        this.props.logOut()
+      })
   }
   
   render() {
@@ -35,8 +38,8 @@ class Nav extends Component {
       return this.props.location.pathname !== '/' &&
         <div className='nav'>
           <div className='nav-profile-container'>
-            <div className='nav-profile-pic' style={{backgroundImage: `url(${`https://robohash.org/${this.props.updateUser}.png`})`}}></div>
-            <p>placeholder username</p>
+            <div className='nav-profile-pic' style={{backgroundImage: this.props.profile_pic}}></div>
+            <p>{this.props.username}</p>
           </div>
           <div className='nav-links'>
             <Link to='/dash'>
