@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import './Dash.css';
-import Link from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class Dash extends Component {
   constructor(props) {

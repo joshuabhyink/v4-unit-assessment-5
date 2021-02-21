@@ -44,28 +44,35 @@ module.exports = {
     }
   },
   createPost: (req, res) => {
+    const db = req.app.get("db");
+    const { id } = req.session.user;
+    const { title, img, content } = req.body;
+    const date = new Date();
+    if (id) {
+      db.post.create_post(id, title, img, content, date).then((post) => {
+        // console.log(post)
+        if (post[0]) {
+          res.status(200).send(post[0]);
+        }
+      }).catch(err => {
+        console.log(err)
+        res.sendStatus(403)
+      })
+    } else {
+      return sendStatus(403);
+    }
     // const db = req.app.get("db");
     // const { id } = req.session.user;
     // const { title, img, content } = req.body;
     // const date = new Date();
     // if (id) {
-    //   db.post.create_post(id, title, img, content, date).then((post) => {
-    //     if (post[0]) {
-    //       res.status(200).send(post[0]);
-    //     }
-    //   });
-    // } else {
-    //   return sendStatus(403);
+    //   db.post
+    //     .create_post(id, title, img, content, date)
+    //     .then((post) =>
+    //       post[0] ? res.status(200).send(post[0]) : res.status(200).send({})
+    //     )
+    //     .catch((err) => console.log(err));
     // }
-    const db = req.app.get('db')
-      const {id} = req.session.user
-      const {title, img, content} = req.body
-      const date = new Date()
-      if(id){
-        db.post.create_post(id, title, img, content, date)
-          .then(post => post[0] ? res.status(200).send(post[0]) : res.status(200).send({}))
-          .catch(err => console.log(err))
-      }
   },
   readPost: (req, res) => {
     req.app
@@ -76,6 +83,7 @@ module.exports = {
       );
   },
   deletePost: (req, res) => {
+    console.log(req.params.id)
     req.app
       .get("db")
       .post.delete_post(req.params.id)
